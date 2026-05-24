@@ -1,0 +1,35 @@
+=== AUDIT TRAIL ===
+All system events recorded here.
+------------------------------------------------------------------------
+[SALE]    Mon May 11 16:58:03 PST 2026 | Order# 1 | Total: 1000.00 | Payment: Cash
+[LOGIN]  Date: Mon May 11 16:58:18 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Mon May 11 16:58:18 PST 2026
+[RESTOCK] Date: Mon May 11 16:59:36 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 15    | New: 20    | By: MANAGER
+[LOGOUT] Date: Mon May 11 17:00:14 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Mon May 11 17:00:14 PST 2026
+[LOGIN]  Date: Mon May 11 17:00:20 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Mon May 11 17:00:20 PST 2026
+[RESTOCK] Date: Mon May 11 17:02:03 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 20    | New: 25    | By: MANAGER
+[LOGOUT] Date: Mon May 11 17:02:21 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Mon May 11 17:02:21 PST 2026
+[LOGIN]  Date: Wed May 13 17:52:28 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Wed May 13 17:52:28 PST 2026
+[LOGOUT] Date: Wed May 13 17:52:39 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Wed May 13 17:52:39 PST 2026
+[SALE]    Thu May 14 00:03:54 PST 2026 | Order# 2 | Total: 1250.00 | Payment: Cash
+[LOGIN]  Date: Thu May 14 08:51:11 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Thu May 14 08:51:11 PST 2026
+[RESTOCK] Date: Thu May 14 08:51:24 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 20    | New: 25    | By: MANAGER
+[LOGOUT] Date: Thu May 14 08:51:28 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Thu May 14 08:51:28 PST 2026
+[SALE]    Thu May 14 08:53:21 PST 2026 | Order# 3 | Total: 1000.00 | Payment: Cash
+[LOGIN]  Date: Thu May 14 08:58:06 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Thu May 14 08:58:05 PST 2026
+[LOGOUT] Date: Thu May 14 09:02:06 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Thu May 14 09:02:06 PST 2026
+[LOGIN]  Date: Thu May 14 09:02:33 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Thu May 14 09:02:33 PST 2026
+[LOGOUT] Date: Thu May 14 09:07:11 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Thu May 14 09:07:11 PST 2026
+[LOGIN]  Date: Thu May 14 09:07:34 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Thu May 14 09:07:33 PST 2026
+[LOGOUT] Date: Thu May 14 09:07:58 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Thu May 14 09:07:58 PST 2026
+[LOGIN]  Date: Tue May 19 11:16:56 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Tue May 19 11:16:56 PST 2026
+[LOGOUT] Date: Tue May 19 11:17:20 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Tue May 19 11:17:20 PST 2026
+[LOGIN]  Date: Wed May 20 12:14:00 PST 2026 | Role: EMPLOYEE | Name: Employee | Time-In: Wed May 20 12:14:00 PST 2026
+[LOGOUT] Date: Wed May 20 12:14:03 PST 2026 | Role: EMPLOYEE | Name: Employee | Time-Out: Wed May 20 12:14:03 PST 2026
+[SALE]    Wed May 20 14:58:22 PST 2026 | Order# 4 | Total: 428.40 | Payment: GCash
+[LOGIN]  Date: Wed May 20 15:00:06 PST 2026 | Role: MANAGER  | Name: Manager | Time-In: Wed May 20 15:00:06 PST 2026
+[RESTOCK] Date: Wed May 20 15:00:15 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 2     | Old: 23    | New: 25    | By: MANAGER
+[RESTOCK] Date: Wed May 20 15:00:24 PST 2026 | ID: 301   | Product: Canned Tuna          | Added: 1     | Old: 49    | New: 50    | By: MANAGER
+[LOGOUT] Date: Wed May 20 15:01:56 PST 2026 | Role: MANAGER  | Name: Manager | Time-Out: Wed May 20 15:01:56 PST 2026
+[LOGIN]  Date: Wed May 20 15:03:30 PST 2026 | Role: EMPLOYEE | Name: Employee | Time-In: Wed May 20 15:03:30 PST 2026
+[LOGOUT] Date: Wed May 20 15:04:12 PST 2026 | Role: EMPLOYEE | Name: Employee | Time-Out: Wed May 20 15:04:12 PST 2026
+[SALE]    Wed May 20 17:08:25 PST 2026 | Order# 5 | Total: 1000.00 | Payment: GCash

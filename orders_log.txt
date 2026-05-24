@@ -1,0 +1,8 @@
+=== ORDERS LOG ===
+Format: Order# | Date | Items | Subtotal | Discount | Total | Payment
+------------------------------------------------------------------------
+Order# 1    | Mon May 11 16:58:03 PST 2026 | Items: Jasmine Rice 5k x5; | Subtotal: 1250.00 | Discount: PWD -250.00 | Total: 1000.00 | Payment: Cash
+Order# 2    | Thu May 14 00:03:54 PST 2026 | Items: Jasmine Rice 5k x5; | Subtotal: 1250.00 | Discount: None | Total: 1250.00 | Payment: Cash
+Order# 3    | Thu May 14 08:53:21 PST 2026 | Items: Jasmine Rice 5k x5; | Subtotal: 1250.00 | Discount: PWD -250.00 | Total: 1000.00 | Payment: Cash
+Order# 4    | Wed May 20 14:58:22 PST 2026 | Items: Jasmine Rice 5k x2; Canned Tuna x1; | Subtotal: 535.50 | Discount: PWD -107.10 | Total: 428.40 | Payment: GCash
+Order# 5    | Wed May 20 17:08:25 PST 2026 | Items: Jasmine Rice 5k x5; | Subtotal: 1250.00 | Discount: PWD -250.00 | Total: 1000.00 | Payment: GCash

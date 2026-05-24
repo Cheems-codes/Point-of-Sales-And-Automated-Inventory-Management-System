@@ -1,0 +1,8 @@
+=== RESTOCK LOG ===
+Format: Date | ID | Product | Added | Old Stock | New Stock | By
+------------------------------------------------------------------------
+Date: Mon May 11 16:59:36 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 15    | New: 20    | By: MANAGER
+Date: Mon May 11 17:02:03 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 20    | New: 25    | By: MANAGER
+Date: Thu May 14 08:51:24 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 5     | Old: 20    | New: 25    | By: MANAGER
+Date: Wed May 20 15:00:15 PST 2026 | ID: 101   | Product: Jasmine Rice 5k      | Added: 2     | Old: 23    | New: 25    | By: MANAGER
+Date: Wed May 20 15:00:24 PST 2026 | ID: 301   | Product: Canned Tuna          | Added: 1     | Old: 49    | New: 50    | By: MANAGER
