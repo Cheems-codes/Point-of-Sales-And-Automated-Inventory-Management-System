@@ -192,13 +192,135 @@ tbody td{padding:10px 14px;color:var(--dark)}
 .login-err{font-size:12px;color:var(--danger);margin-top:8px;display:none}
 
 /* ── INVOICE MODAL ── */
-.invoice-modal{background:var(--card);border-radius:18px;padding:28px;width:460px;max-height:80vh;overflow-y:auto;border:1.5px solid var(--border);box-shadow:0 20px 60px rgba(13,27,62,.18)}
-.invoice-modal h3{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.invoice-modal .inv-sub{font-size:12px;color:var(--muted);margin-bottom:20px}
-.invoice-block{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dark);line-height:1.7;margin-bottom:18px;white-space:pre-wrap;word-break:break-word}
-.invoice-actions{display:flex;gap:8px}
-.invoice-actions .btn-primary{flex:1;justify-content:center;padding:11px}
-.invoice-actions .btn-outline{flex:1;justify-content:center;padding:11px}
+.invoice-wrap{background:var(--card);border-radius:20px;width:400px;max-height:88vh;display:flex;flex-direction:column;border:1.5px solid var(--border);box-shadow:0 24px 80px rgba(13,27,62,.22);overflow:hidden}
+.invoice-scroll{overflow-y:auto;flex:1}
+.receipt{background:#fff;width:100%;font-family:'DM Sans',sans-serif}
+.receipt-top{background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);padding:28px 24px 20px;text-align:center;color:#fff}
+.receipt-top .r-logo{width:52px;height:52px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px}
+.receipt-top .r-store{font-size:18px;font-weight:700;letter-spacing:.3px;margin-bottom:2px}
+.receipt-top .r-tagline{font-size:11px;opacity:.75;letter-spacing:.5px}
+.receipt-divider{display:flex;align-items:center;gap:0;overflow:hidden}
+.receipt-divider span{width:18px;height:18px;border-radius:50%;background:var(--bg);flex-shrink:0}
+.receipt-divider span:first-child{margin-left:-9px}
+.receipt-divider span:last-child{margin-right:-9px}
+.receipt-dashes{flex:1;border-top:2px dashed var(--border);margin:0 2px}
+.receipt-body{padding:20px 24px}
+.receipt-meta{display:flex;justify-content:space-between;margin-bottom:16px}
+.receipt-meta-item .lbl{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.receipt-meta-item .val{font-size:13px;font-weight:600;color:var(--dark);font-family:'JetBrains Mono',monospace}
+.receipt-items{margin-bottom:4px}
+.receipt-item-head{display:flex;justify-content:space-between;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--border2);margin-bottom:4px}
+.r-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2)}
+.r-item:last-child{border-bottom:none}
+.r-item-icon{font-size:20px;width:30px;text-align:center;flex-shrink:0}
+.r-item-info{flex:1;min-width:0}
+.r-item-name{font-size:13px;font-weight:500;color:var(--dark)}
+.r-item-qty{font-size:11px;color:var(--muted)}
+.r-item-price{font-size:13px;font-weight:600;color:var(--dark);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.receipt-totals{background:var(--bg);border-radius:12px;padding:14px 16px;margin-top:14px}
+.r-tot-row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mid);padding:3px 0}
+.r-tot-row.disc{color:var(--accent2)}
+.r-tot-row.grand{font-size:16px;font-weight:700;color:var(--dark);border-top:1.5px solid var(--border);padding-top:10px;margin-top:6px}
+.receipt-payment{margin-top:16px;padding:12px 16px;border:1.5px solid var(--border);border-radius:12px;display:flex;align-items:center;gap:12px}
+.pay-icon-wrap{width:38px;height:38px;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+.pay-details .pay-method{font-size:13px;font-weight:600;color:var(--dark)}
+.pay-details .pay-info{font-size:11.5px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.receipt-bottom{padding:16px 24px 20px;text-align:center}
+.receipt-bottom .thank-you{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.receipt-bottom .r-note{font-size:11.5px;color:var(--muted);margin-bottom:14px}
+.receipt-bottom .r-barcode{display:flex;justify-content:center;gap:1px;margin-bottom:8px}
+.receipt-bottom .r-barcode span{display:inline-block;width:2px;background:var(--dark);border-radius:1px}
+.receipt-bottom .r-order-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.invoice-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--card);flex-shrink:0}
+.invoice-foot .btn-primary{flex:1;justify-content:center;padding:11px}
+.invoice-foot .btn-outline{flex:1;justify-content:center;padding:11px}
+
+/* ── CUSTOMER AUTH SPLASH ── */
+.auth-splash{position:fixed;inset:0;background:linear-gradient(135deg,var(--dark) 0%,#1A3A6B 100%);z-index:500;display:flex;align-items:center;justify-content:center}
+.auth-card{background:var(--card);border-radius:24px;padding:36px;width:400px;border:1.5px solid var(--border);box-shadow:0 32px 80px rgba(0,0,0,.4)}
+.auth-logo{text-align:center;margin-bottom:24px}
+.auth-logo img{width:64px;height:64px;object-fit:contain;border-radius:16px;background:#fff;padding:4px;margin-bottom:10px;display:block;margin:0 auto 10px}
+.auth-logo .brand{font-size:22px;font-weight:700;color:var(--dark)}
+.auth-logo .tagline{font-size:12px;color:var(--muted)}
+.auth-tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:24px}
+.auth-tab{flex:1;padding:8px;border-radius:7px;text-align:center;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;transition:.15s;font-family:'Sora',sans-serif}
+.auth-tab.active{background:var(--card);color:var(--accent);font-weight:600;box-shadow:0 1px 4px rgba(26,93,200,.1)}
+.auth-form .form-row{margin-bottom:14px}
+.auth-form .form-row label{display:block;font-size:11.5px;font-weight:600;color:var(--mid);margin-bottom:5px;letter-spacing:.3px}
+.auth-form .form-row input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'Sora',sans-serif;font-size:13.5px;color:var(--dark);background:var(--bg);outline:none;transition:.15s}
+.auth-form .form-row input:focus{border-color:var(--accent2);background:#fff}
+.auth-submit{width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;margin-top:4px;transition:.18s}
+.auth-submit:hover{opacity:.9;transform:translateY(-1px)}
+.auth-err{font-size:12px;color:var(--danger);margin-top:10px;text-align:center;display:none}
+.auth-guest{text-align:center;margin-top:16px;font-size:12px;color:var(--muted)}
+.auth-guest a{color:var(--accent2);cursor:pointer;font-weight:500;text-decoration:underline}
+
+/* ── CUSTOMER HEADER BADGE ── */
+.customer-badge{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg);border:1.5px solid var(--border);border-radius:20px;font-size:12.5px;cursor:pointer;transition:.15s}
+.customer-badge:hover{border-color:var(--accent2)}
+.customer-badge .c-avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.customer-badge .c-name{font-weight:500;color:var(--dark);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── MY ORDERS VIEW ── */
+.my-orders-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.my-orders-empty i{font-size:48px;display:block;margin-bottom:12px;opacity:.25}
+.my-orders-empty p{font-size:14px;font-weight:500;margin-bottom:6px}
+.order-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:12px;cursor:pointer;transition:.15s}
+.order-card:hover{border-color:var(--accent2);box-shadow:0 4px 16px rgba(26,93,200,.1)}
+.order-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.order-card-num{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--accent)}
+.order-card-date{font-size:11px;color:var(--muted)}
+.order-card-total{font-size:18px;font-weight:700;color:var(--dark)}
+.order-card-meta{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.order-pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--bg);color:var(--mid);border:1px solid var(--border)}
+
+/* ── RECEIPT REDESIGN ── */
+.invoice-wrap{background:var(--card);border-radius:22px;width:420px;max-height:90vh;display:flex;flex-direction:column;border:none;box-shadow:0 32px 80px rgba(13,27,62,.25);overflow:hidden}
+.invoice-scroll{overflow-y:auto;flex:1}
+.receipt{background:#fff;width:100%}
+.receipt-top{background:linear-gradient(150deg,#0D1B3E 0%,#1A5DC8 60%,#2E7CF6 100%);padding:32px 28px 24px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.receipt-top::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.receipt-top::after{content:'';position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.04)}
+.r-logo{width:58px;height:58px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:28px;position:relative;z-index:1;backdrop-filter:blur(4px)}
+.r-store{font-size:20px;font-weight:700;letter-spacing:.5px;margin-bottom:3px;position:relative;z-index:1}
+.r-tagline{font-size:10.5px;opacity:.65;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+.r-status-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;margin-top:10px;position:relative;z-index:1;backdrop-filter:blur(4px)}
+.r-status-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80}
+.receipt-divider{display:flex;align-items:center;overflow:hidden;background:#fff}
+.receipt-divider span{width:20px;height:20px;border-radius:50%;background:var(--bg);flex-shrink:0;box-shadow:inset 0 0 0 1.5px var(--border)}
+.receipt-divider span:first-child{margin-left:-10px}
+.receipt-divider span:last-child{margin-right:-10px}
+.receipt-dashes{flex:1;border-top:2px dashed var(--border);margin:0 3px}
+.receipt-body{padding:22px 26px}
+.receipt-meta{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding:14px 16px;background:var(--bg);border-radius:12px;border:1px solid var(--border2)}
+.receipt-meta-item .lbl{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.receipt-meta-item .val{font-size:13px;font-weight:700;color:var(--dark);font-family:'JetBrains Mono',monospace}
+.receipt-items-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between}
+.r-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2)}
+.r-item:last-child{border-bottom:none}
+.r-item-icon-wrap{width:38px;height:38px;border-radius:10px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid var(--border2)}
+.r-item-info{flex:1;min-width:0}
+.r-item-name{font-size:13px;font-weight:600;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r-item-qty{font-size:11.5px;color:var(--muted);margin-top:1px}
+.r-item-price{font-size:14px;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.receipt-totals{background:var(--bg);border-radius:14px;padding:16px;margin-top:16px;border:1px solid var(--border2)}
+.r-tot-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mid);padding:4px 0}
+.r-tot-row.disc{color:var(--accent2)}
+.r-tot-row.grand{font-size:18px;font-weight:800;color:var(--dark);border-top:2px solid var(--border);padding-top:12px;margin-top:6px}
+.r-tot-row.grand span:last-child{color:var(--accent)}
+.receipt-payment{margin-top:16px;padding:14px 16px;background:linear-gradient(135deg,#EFF4FB,#E0ECFF);border:1.5px solid var(--border);border-radius:14px;display:flex;align-items:center;gap:14px}
+.pay-icon-wrap{width:42px;height:42px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(26,93,200,.3)}
+.pay-details .pay-method{font-size:13.5px;font-weight:700;color:var(--dark)}
+.pay-details .pay-info{font-size:11.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:1px}
+.receipt-bottom{padding:20px 26px 26px;text-align:center}
+.receipt-bottom .thank-you{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:5px}
+.receipt-bottom .r-note{font-size:12px;color:var(--muted);margin-bottom:18px}
+.r-barcode{display:flex;justify-content:center;align-items:flex-end;gap:1.5px;margin-bottom:10px;height:36px}
+.r-barcode span{display:inline-block;width:2.5px;background:var(--dark);border-radius:1px;opacity:.7}
+.r-order-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px}
+.invoice-foot{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--card);flex-shrink:0}
+.invoice-foot .btn-primary{flex:1;justify-content:center;padding:12px;font-size:13.5px}
+.invoice-foot .btn-outline{flex:1;justify-content:center;padding:12px;font-size:13.5px}
 
 /* ── TOAST ── */
 .toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--dark);color:#EFF4FB;padding:9px 18px;border-radius:10px;font-size:12.5px;font-weight:500;opacity:0;transition:.25s;pointer-events:none;z-index:999;white-space:nowrap}
@@ -209,6 +331,37 @@ tbody td{padding:10px 14px;color:var(--dark)}
 </style>
 </head>
 <body>
+<!-- CUSTOMER AUTH SPLASH -->
+<div class="auth-splash" id="auth-splash">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div style="font-size:40px;margin-bottom:8px">🛒</div>
+      <div class="brand">Tyrone's POS</div>
+      <div class="tagline">Sign in to start shopping</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
+      <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</div>
+    </div>
+    <!-- LOGIN FORM -->
+    <div id="auth-login-form" class="auth-form">
+      <div class="form-row"><label>Email Address</label><input type="email" id="cust-login-email" placeholder="your@email.com" onkeydown="if(event.key==='Enter')doCustomerLogin()"></div>
+      <div class="form-row"><label>Password</label><input type="password" id="cust-login-pass" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doCustomerLogin()"></div>
+      <button class="auth-submit" onclick="doCustomerLogin()">Sign In →</button>
+      <div class="auth-err" id="login-cust-err">Invalid email or password.</div>
+    </div>
+    <!-- REGISTER FORM -->
+    <div id="auth-register-form" class="auth-form" style="display:none">
+      <div class="form-row"><label>Full Name</label><input type="text" id="cust-reg-name" placeholder="Your full name"></div>
+      <div class="form-row"><label>Email Address</label><input type="email" id="cust-reg-email" placeholder="your@email.com"></div>
+      <div class="form-row"><label>Password</label><input type="password" id="cust-reg-pass" placeholder="Create a password" onkeydown="if(event.key==='Enter')doCustomerRegister()"></div>
+      <button class="auth-submit" onclick="doCustomerRegister()">Create Account →</button>
+      <div class="auth-err" id="register-cust-err">Registration failed. Try again.</div>
+    </div>
+    <div class="auth-guest">Just browsing? <a onclick="guestMode()">Continue as Guest</a></div>
+  </div>
+</div>
+
 <div class="app">
 
 <!-- SIDEBAR -->
@@ -226,6 +379,8 @@ tbody td{padding:10px 14px;color:var(--dark)}
     <div class="nav-item" id="nav-restock-log" onclick="requireLogin('restock-log',this)"><i class="ti ti-rotate-clockwise-2"></i> Restock Log</div>
     <div class="nav-item" id="nav-timelog" onclick="requireLogin('timelog',this)"><i class="ti ti-clock"></i> Time Logs</div>
     <div class="nav-item" id="nav-audit" onclick="requireLogin('audit',this)"><i class="ti ti-shield-check"></i> Audit Trail</div>
+    <div class="nav-item" id="nav-my-orders" onclick="switchView('my-orders',this)" style="display:none"><i class="ti ti-clock-history"></i> My Orders</div>
+
     <div class="nav-label">System</div>
     <div class="nav-item" id="nav-login-btn" onclick="openLoginModal()"><i class="ti ti-lock"></i> Staff Login</div>
     <div class="nav-item" id="nav-logout-btn" style="display:none" onclick="logout()"><i class="ti ti-logout"></i> Logout</div>
@@ -248,6 +403,13 @@ tbody td{padding:10px 14px;color:var(--dark)}
       <input type="text" id="search-input" placeholder="Search by name or ID…" oninput="filterProducts(this.value)">
     </div>
     <div class="topbar-right">
+      <div id="customer-badge-wrap" style="display:none">
+        <div class="customer-badge" onclick="showMyOrders()">
+          <div class="c-avatar" id="cust-avatar">?</div>
+          <span class="c-name" id="cust-name-badge">Guest</span>
+          <i class="ti ti-chevron-down" style="font-size:13px;color:var(--muted)"></i>
+        </div>
+      </div>
       <div class="db-pill"><span class="db-dot"></span> DB Connected</div>
       <div class="icon-btn" title="Print"><i class="ti ti-printer"></i></div>
       <div class="icon-btn" title="Refresh" onclick="location.reload()"><i class="ti ti-refresh"></i></div>
@@ -377,6 +539,19 @@ tbody td{padding:10px 14px;color:var(--dark)}
       </div>
     </div>
 
+    <!-- ══ MY ORDERS ══ -->
+    <div class="view" id="view-my-orders">
+      <div class="view-body">
+        <div class="view-head">
+          <div class="view-h" id="my-orders-title">My Order History</div>
+          <button class="btn-outline" onclick="signOutCustomer()"><i class="ti ti-logout"></i> Sign Out</button>
+        </div>
+        <div id="my-orders-content">
+          <div class="my-orders-empty"><i class="ti ti-receipt-off"></i><p>No orders yet</p><span>Your completed orders will appear here</span></div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /content-area -->
 </div><!-- /main -->
 </div><!-- /app -->
@@ -439,11 +614,11 @@ tbody td{padding:10px 14px;color:var(--dark)}
 
 <!-- INVOICE MODAL -->
 <div class="modal-bg" id="invoice-modal">
-  <div class="invoice-modal">
-    <h3><i class="ti ti-receipt" style="color:var(--accent)"></i> Order Invoice</h3>
-    <p class="inv-sub">Transaction completed successfully</p>
-    <div class="invoice-block" id="invoice-content"></div>
-    <div class="invoice-actions">
+  <div class="invoice-wrap">
+    <div class="invoice-scroll">
+      <div class="receipt" id="receipt-render"></div>
+    </div>
+    <div class="invoice-foot">
       <button class="btn-primary" onclick="printInvoice()"><i class="ti ti-printer"></i> Print</button>
       <button class="btn-outline" onclick="closeInvoice()"><i class="ti ti-x"></i> Close</button>
     </div>
@@ -613,7 +788,8 @@ function switchView(view, navEl){
   if(navEl) navEl.classList.add('active');
   document.getElementById('topbar-title').textContent={
     register:'Register',inventory:'Inventory',sales:'Sales History',
-    'restock-log':'Restock Log',timelog:'Time Logs',audit:'Audit Trail'
+    'restock-log':'Restock Log',timelog:'Time Logs',audit:'Audit Trail',
+    'my-orders':'My Orders'
   }[view]||view;
   const isRegister = view==='register';
   document.getElementById('search-bar').style.display=isRegister?'':'none';
@@ -625,6 +801,7 @@ function switchView(view, navEl){
   if(view==='restock-log') renderRestockLog();
   if(view==='timelog') renderTimeLog();
   if(view==='audit') renderAuditTrail();
+  if(view==='my-orders') renderMyOrders();
 }
 
 function requireLogin(view,navEl){
@@ -830,6 +1007,7 @@ async function checkout(){
     discountAmount: disc, total,
     paymentMethod: payMethod, accountInfo,
     cashTendered, changeAmount: cashTendered!=null ? cashTendered-total : null,
+    customerId: currentCustomer ? currentCustomer.customerId : -1,
     items
   };
 
@@ -871,7 +1049,21 @@ async function checkout(){
   }
   inv += '*'.repeat(38);
 
-  showInvoice(inv, savedOrderId, total, payMethod);
+  // Build structured invoice object for the new receipt
+  const invObj = {
+    orderId: savedOrderId,
+    sub, disc, total,
+    discType: activeDisc || 'None',
+    payment: payMethod,
+    accountInfo,
+    cashTendered: cashTenderedVal,
+    items: ids.map(id => ({
+      name: INVENTORY[id].name, icon: INVENTORY[id].icon,
+      qty: cart[id], unitPrice: INVENTORY[id].price
+    })),
+    customerName: currentCustomer ? currentCustomer.name : 'Guest'
+  };
+  showInvoice(invObj);
 
   const itemCount=ids.reduce((s,id)=>s+cart[id],0);
   totalRevenue+=total; totalItems+=itemCount; sessionOrders++; totalDiscounts+=disc;
@@ -1155,26 +1347,281 @@ async function logout(){
   switchView('register',document.querySelector('.nav-item'));
 }
 
+// ════════════ CUSTOMER AUTH ════════════
+let currentCustomer = null; // { customerId, name, email }
+
+function switchAuthTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('auth-login-form').style.display = tab==='login' ? '' : 'none';
+  document.getElementById('auth-register-form').style.display = tab==='register' ? '' : 'none';
+}
+
+async function doCustomerLogin(){
+  const email = document.getElementById('cust-login-email').value.trim();
+  const pass  = document.getElementById('cust-login-pass').value;
+  const err   = document.getElementById('login-cust-err');
+  err.style.display = 'none';
+  if(!email||!pass){ err.textContent='Please fill in all fields.'; err.style.display='block'; return; }
+  try {
+    const res = await fetch(`${API}/customer/login`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,password:pass})});
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error||'Login failed');
+    setCustomer(data);
+    dismissAuthSplash();
+  } catch(e){
+    err.textContent = e.message || 'Invalid email or password.';
+    err.style.display = 'block';
+  }
+}
+
+async function doCustomerRegister(){
+  const name  = document.getElementById('cust-reg-name').value.trim();
+  const email = document.getElementById('cust-reg-email').value.trim();
+  const pass  = document.getElementById('cust-reg-pass').value;
+  const err   = document.getElementById('register-cust-err');
+  err.style.display = 'none';
+  if(!name||!email||!pass){ err.textContent='Please fill in all fields.'; err.style.display='block'; return; }
+  try {
+    const res = await fetch(`${API}/customer/register`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,email,password:pass})});
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error||'Registration failed');
+    setCustomer(data);
+    dismissAuthSplash();
+    showToast('✓ Account created! Welcome, '+data.name+'!');
+  } catch(e){
+    err.textContent = e.message || 'Registration failed.';
+    err.style.display = 'block';
+  }
+}
+
+function guestMode(){
+  currentCustomer = null;
+  dismissAuthSplash();
+  showToast('Browsing as guest');
+}
+
+function setCustomer(data){
+  currentCustomer = { customerId: data.customerId, name: data.name, email: data.email };
+  document.getElementById('cust-avatar').textContent = data.name.charAt(0).toUpperCase();
+  document.getElementById('cust-name-badge').textContent = data.name;
+  document.getElementById('customer-badge-wrap').style.display = '';
+  document.getElementById('nav-my-orders').style.display = 'flex';
+}
+
+function dismissAuthSplash(){
+  const splash = document.getElementById('auth-splash');
+  splash.style.opacity = '0';
+  splash.style.transform = 'scale(1.03)';
+  splash.style.transition = 'opacity .3s, transform .3s';
+  setTimeout(()=>{ splash.style.display='none'; },300);
+}
+
+function signOutCustomer(){
+  currentCustomer = null;
+  document.getElementById('customer-badge-wrap').style.display = 'none';
+  document.getElementById('nav-my-orders').style.display = 'none';
+  switchView('register', document.querySelector('.nav-item'));
+  // Show splash again
+  const splash = document.getElementById('auth-splash');
+  splash.style.display = 'flex';
+  splash.style.opacity = '1';
+  splash.style.transform = 'none';
+  showToast('Signed out successfully');
+}
+
+function showMyOrders(){
+  const navEl = document.getElementById('nav-my-orders');
+  switchView('my-orders', navEl);
+}
+
+async function renderMyOrders(){
+  const container = document.getElementById('my-orders-content');
+  if(!currentCustomer){ 
+    container.innerHTML = '<div class="my-orders-empty"><i class="ti ti-user-off"></i><p>Not signed in</p><span>Sign in to view your orders</span></div>';
+    return;
+  }
+  document.getElementById('my-orders-title').textContent = currentCustomer.name + "'s Order History";
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">Loading…</div>';
+  try {
+    const res = await fetch(`${API}/customer/orders?customerId=${currentCustomer.customerId}`);
+    const orders = await res.json();
+    if(!orders.length){
+      container.innerHTML = '<div class="my-orders-empty"><i class="ti ti-receipt-off"></i><p>No orders yet</p><span>Your completed orders will appear here after checkout</span></div>';
+      return;
+    }
+    container.innerHTML = orders.map(o=>`
+      <div class="order-card" onclick="viewOrderItems(${o.orderId})">
+        <div class="order-card-head">
+          <span class="order-card-num">#${String(o.orderId).padStart(4,'0')}</span>
+          <span class="order-card-date">${o.orderDate||'—'}</span>
+        </div>
+        <div class="order-card-total">₱${(+o.total).toFixed(2)}</div>
+        <div class="order-card-meta">
+          <span class="order-pill"><i class="ti ti-cash" style="font-size:11px"></i> ${o.paymentMethod||'—'}</span>
+          ${o.discountType ? '<span class="order-pill" style="color:var(--accent2);border-color:var(--accent2)">'+o.discountType+' -₱'+(+o.discountAmount).toFixed(2)+'</span>' : ''}
+          <span class="order-pill" style="color:var(--success);border-color:var(--success)">✓ Completed</span>
+        </div>
+      </div>`).join('');
+  } catch(e){
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--danger)">⚠ Cannot load orders</div>';
+  }
+}
+
+async function viewOrderItems(orderId){
+  try {
+    const res = await fetch(`${API}/order-items?orderId=${orderId}`);
+    const items = await res.json();
+    // Show invoice for historical order
+    const order = { orderId, sub:0, disc:0, total:0, discType:'—', payment:'—', accountInfo:null, cashTendered:null,
+      customerName: currentCustomer?currentCustomer.name:'Guest',
+      items: items.map(i=>({name:i.productName,icon:'📦',qty:i.quantity,unitPrice:i.unitPrice}))
+    };
+    items.forEach(i=>{ order.sub += i.unitPrice*i.quantity; order.total += i.subtotal; });
+    showInvoice(order);
+  } catch(e){ showToast('⚠ Could not load order details'); }
+}
+
 // ════════════ INVOICE MODAL ════════════
-function showInvoice(invoiceText, orderId, total, payment){
-  document.getElementById('invoice-content').textContent = invoiceText;
+function showInvoice(inv){
   document.getElementById('invoice-modal').classList.add('open');
-  // Store for print
-  window._lastInvoice = { text: invoiceText, orderId, total, payment };
+  window._lastInvoice = inv;
+  document.getElementById('receipt-render').innerHTML = buildReceiptHTML(inv);
+}
+
+function buildReceiptHTML(inv){
+  const orderNum = String(inv.orderId).padStart(4,'0');
+  const dateStr = new Date().toLocaleString('en-PH',{dateStyle:'medium',timeStyle:'short'});
+  const payIcons = {Cash:'ti-cash', Card:'ti-credit-card', GCash:'ti-device-mobile', Other:'ti-wallet'};
+  const payIcon = payIcons[inv.payment] || 'ti-wallet';
+
+  // Varied barcode bars
+  const bHeights = [28,14,36,20,28,12,32,18,26,10,34,22,28,16,32,14,26,20,34,12,30,18,28,16,36,20,24,14,32,18];
+  const barcode = bHeights.map(h=>`<span style="height:${h}px"></span>`).join('');
+
+  const itemRows = (inv.items||[]).map(it=>`
+    <div class="r-item">
+      <div class="r-item-icon-wrap">${it.icon||'📦'}</div>
+      <div class="r-item-info">
+        <div class="r-item-name">${it.name}</div>
+        <div class="r-item-qty">${it.qty} unit${it.qty>1?'s':''} &times; ₱${(+it.unitPrice).toFixed(2)}</div>
+      </div>
+      <div class="r-item-price">₱${(it.qty*(+it.unitPrice)).toFixed(2)}</div>
+    </div>`).join('');
+
+  const discRow = inv.disc > 0
+    ? `<div class="r-tot-row disc"><span><i class="ti ti-discount-2" style="font-size:13px;vertical-align:-1px"></i> ${inv.discType} (20%)</span><span>-₱${(+inv.disc).toFixed(2)}</span></div>` : '';
+
+  const cashRows = inv.payment==='Cash' && inv.cashTendered
+    ? `<div class="r-tot-row" style="color:var(--mid)"><span>Cash Tendered</span><span>₱${(+inv.cashTendered).toFixed(2)}</span></div>
+       <div class="r-tot-row" style="color:var(--success);font-weight:600"><span>Change</span><span>₱${((+inv.cashTendered)-(+inv.total)).toFixed(2)}</span></div>` : '';
+
+  const acctInfo = inv.accountInfo
+    ? `<div class="pay-details"><div class="pay-method">${inv.payment}</div><div class="pay-info">${inv.accountInfo}</div></div>`
+    : `<div class="pay-details"><div class="pay-method">${inv.payment}</div><div class="pay-info">Transaction complete ✓</div></div>`;
+
+  const custRow = inv.customerName && inv.customerName !== 'Guest'
+    ? `<div class="receipt-meta-item" style="text-align:center"><div class="lbl">Customer</div><div class="val" style="font-size:12px">${inv.customerName}</div></div>` : '';
+
+  return `
+  <div class="receipt-top">
+    <div class="r-logo">🛒</div>
+    <div class="r-store">Tyrone's POS</div>
+    <div class="r-tagline">Official Receipt</div>
+    <div class="r-status-badge"><span class="r-status-dot"></span> Payment Confirmed</div>
+  </div>
+  <div class="receipt-divider"><span></span><div class="receipt-dashes"></div><span></span></div>
+  <div class="receipt-body">
+    <div class="receipt-meta">
+      <div class="receipt-meta-item"><div class="lbl">Order No.</div><div class="val">#${orderNum}</div></div>
+      ${custRow}
+      <div class="receipt-meta-item" style="text-align:right"><div class="lbl">Date</div><div class="val" style="font-size:11px;letter-spacing:0">${dateStr}</div></div>
+    </div>
+    <div class="receipt-items-label"><span>Items Purchased</span><span>Amount</span></div>
+    <div class="receipt-items">${itemRows}</div>
+    <div class="receipt-totals">
+      <div class="r-tot-row"><span>Subtotal</span><span>₱${(+inv.sub).toFixed(2)}</span></div>
+      ${discRow}
+      ${cashRows}
+      <div class="r-tot-row grand"><span>Total Paid</span><span>₱${(+inv.total).toFixed(2)}</span></div>
+    </div>
+    <div class="receipt-payment">
+      <div class="pay-icon-wrap"><i class="ti ${payIcon}"></i></div>
+      ${acctInfo}
+    </div>
+  </div>
+  <div class="receipt-divider"><span></span><div class="receipt-dashes"></div><span></span></div>
+  <div class="receipt-bottom">
+    <div class="thank-you">Thank you for shopping! 🙏</div>
+    <div class="r-note">We appreciate your business — see you again!</div>
+    <div class="r-barcode">${barcode}</div>
+    <div class="r-order-num">* ORDER-${orderNum} *</div>
+  </div>`;
+}
+
+function showInvoice(inv){
+  document.getElementById('receipt-render').innerHTML = buildReceiptHTML(inv);
+  document.getElementById('invoice-modal').classList.add('open');
+  window._lastInvoice = inv;
 }
 function closeInvoice(){
   document.getElementById('invoice-modal').classList.remove('open');
 }
 function printInvoice(){
   if(!window._lastInvoice) return;
-  const w = window.open('','_blank','width=400,height=600');
-  w.document.write('<html><head><title>Invoice #'+String(window._lastInvoice.orderId).padStart(4,'0')+'</title>');
-  w.document.write('<style>body{font-family:monospace;font-size:13px;padding:20px;white-space:pre-wrap}</style></head><body>');
-  w.document.write(window._lastInvoice.text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
-  w.document.write('</body></html>');
+  const html = buildReceiptHTML(window._lastInvoice);
+  const w = window.open('','_blank','width=440,height=720');
+  w.document.write(`<!DOCTYPE html><html><head><title>Receipt #${String(window._lastInvoice.orderId).padStart(4,'0')}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--accent:#1A5DC8;--accent2:#2E7CF6;--dark:#0D1B3E;--mid:#3A5A8C;--muted:#7A96C2;--border:#C8D9F0;--border2:#E0ECFF;--bg:#EFF4FB;--success:#0F6E56;}
+    body{font-family:'Sora',sans-serif;background:#f0f4fb;display:flex;align-items:flex-start;justify-content:center;padding:20px;min-height:100vh}
+    .receipt{background:#fff;width:100%;max-width:380px;border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(13,27,62,.12)}
+    .receipt-top{background:linear-gradient(150deg,#0D1B3E,#1A5DC8 60%,#2E7CF6);padding:28px 24px 20px;text-align:center;color:#fff;position:relative;overflow:hidden}
+    .receipt-top::before{content:'';position:absolute;top:-40px;right:-40px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.05)}
+    .r-logo{width:54px;height:54px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px;position:relative;z-index:1}
+    .r-store{font-size:19px;font-weight:700;margin-bottom:2px;position:relative;z-index:1}
+    .r-tagline{font-size:10px;opacity:.65;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1}
+    .r-status-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;margin-top:10px;position:relative;z-index:1}
+    .r-status-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;flex-shrink:0}
+    .receipt-divider{display:flex;align-items:center;overflow:hidden;background:#fff}
+    .receipt-divider span{width:20px;height:20px;border-radius:50%;background:#f0f4fb;flex-shrink:0}
+    .receipt-divider span:first-child{margin-left:-10px}.receipt-divider span:last-child{margin-right:-10px}
+    .receipt-dashes{flex:1;border-top:2px dashed #C8D9F0;margin:0 3px}
+    .receipt-body{padding:20px 22px}
+    .receipt-meta{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;padding:12px 14px;background:#EFF4FB;border-radius:10px}
+    .lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7A96C2;margin-bottom:2px}
+    .val{font-size:12.5px;font-weight:700;color:#0D1B3E;font-family:'JetBrains Mono',monospace}
+    .receipt-items-label{font-size:9.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7A96C2;margin-bottom:8px;display:flex;justify-content:space-between}
+    .r-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #E0ECFF}
+    .r-item:last-child{border-bottom:none}
+    .r-item-icon-wrap{width:34px;height:34px;border-radius:8px;background:#EFF4FB;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .r-item-info{flex:1;min-width:0}
+    .r-item-name{font-size:12.5px;font-weight:600;color:#0D1B3E}
+    .r-item-qty{font-size:11px;color:#7A96C2}
+    .r-item-price{font-size:13px;font-weight:700;color:#1A5DC8;font-family:'JetBrains Mono',monospace}
+    .receipt-totals{background:#EFF4FB;border-radius:12px;padding:14px;margin-top:14px}
+    .r-tot-row{display:flex;justify-content:space-between;font-size:12.5px;color:#3A5A8C;padding:3px 0}
+    .r-tot-row.disc{color:#2E7CF6}
+    .r-tot-row.grand{font-size:17px;font-weight:800;color:#0D1B3E;border-top:2px solid #C8D9F0;padding-top:10px;margin-top:6px}
+    .receipt-payment{margin-top:14px;padding:12px 14px;background:linear-gradient(135deg,#EFF4FB,#E0ECFF);border:1.5px solid #C8D9F0;border-radius:12px;display:flex;align-items:center;gap:12px}
+    .pay-icon-wrap{width:38px;height:38px;border-radius:10px;background:#1A5DC8;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+    .pay-method{font-size:13px;font-weight:700;color:#0D1B3E}
+    .pay-info{font-size:11px;color:#7A96C2;font-family:'JetBrains Mono',monospace}
+    .receipt-bottom{padding:16px 22px 24px;text-align:center}
+    .thank-you{font-size:15px;font-weight:700;color:#0D1B3E;margin-bottom:4px}
+    .r-note{font-size:11.5px;color:#7A96C2;margin-bottom:16px}
+    .r-barcode{display:flex;justify-content:center;align-items:flex-end;gap:1.5px;margin-bottom:8px;height:34px}
+    .r-barcode span{display:inline-block;width:2.5px;background:#0D1B3E;border-radius:1px;opacity:.7}
+    .r-order-num{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#7A96C2;letter-spacing:2px}
+    @media print{body{background:#fff;padding:0}.receipt{box-shadow:none;border-radius:0;max-width:100%}}
+  </style></head><body>${html}</body></html>`);
   w.document.close();
-  w.focus();
-  w.print();
+  setTimeout(()=>{w.focus();w.print();},600);
 }
 
 // ════════════ SALES SEARCH FILTER ════════════

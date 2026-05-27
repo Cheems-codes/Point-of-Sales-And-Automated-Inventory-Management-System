@@ -42,6 +42,9 @@ public class PosServer {
         server.createContext("/api/audit-trail",   new AuditTrailHandler());
         server.createContext("/api/checkout",      new CheckoutHandler());
         server.createContext("/api/restock",       new RestockHandler());
+        server.createContext("/api/customer/register", new CustomerRegisterHandler());
+        server.createContext("/api/customer/login",    new CustomerLoginHandler());
+        server.createContext("/api/customer/orders",   new CustomerOrdersHandler());
         server.createContext("/",                  new StaticHandler());   // serves pos_system.html
 
         server.setExecutor(null);
@@ -295,12 +298,23 @@ public class PosServer {
                 String accountInfo    = jsonVal(body, "accountInfo");
                 Double cashTendered   = hasKey(body,"cashTendered") ? dbl(body,"cashTendered") : null;
                 Double changeAmount   = hasKey(body,"changeAmount")  ? dbl(body,"changeAmount")  : null;
+                int customerId        = hasKey(body,"customerId") ? (int)dbl(body,"customerId") : -1;
 
                 // Build lightweight adapter objects for DatabaseManager
                 Discount discount = buildDiscount(discountType, discIdNumber);
                 Payment  payment  = buildPayment(paymentMethod, accountInfo, cashTendered, changeAmount);
 
                 int orderId = DatabaseManager.saveOrder(subtotal, discount, payment, discountAmount, total);
+                // Link order to customer if logged in
+                if (orderId > 0 && customerId > 0) {
+                    try (Connection c2 = DatabaseManager.getConnection();
+                         PreparedStatement ps2 = c2.prepareStatement(
+                             "UPDATE orders SET customer_id = ? WHERE order_id = ?")) {
+                        ps2.setInt(1, customerId);
+                        ps2.setInt(2, orderId);
+                        ps2.executeUpdate();
+                    } catch (Exception ignored) {}
+                }
                 if (orderId < 0) { sendJson(ex, 500, "{\"error\":\"saveOrder failed\"}"); return; }
 
                 // Parse items array and save each + update stock
@@ -393,6 +407,112 @@ public class PosServer {
             } catch (SQLException e) {
                 sendJson(ex, 500, escape(e.getMessage()));
             }
+        }
+    }
+
+    // ── POST /api/customer/register ─────────────────────────────────────────
+    // Body: { "name":"...", "email":"...", "password":"..." }
+    static class CustomerRegisterHandler implements HttpHandler {
+        @Override public void handle(HttpExchange ex) throws IOException {
+            if ("OPTIONS".equals(ex.getRequestMethod())) { sendJson(ex, 200, "{}"); return; }
+            if (!"POST".equals(ex.getRequestMethod())) { sendJson(ex, 405, "{}"); return; }
+            String body = readBody(ex);
+            String name  = jsonVal(body, "name");
+            String email = jsonVal(body, "email");
+            String pass  = jsonVal(body, "password");
+            if (name == null || email == null || pass == null) {
+                sendJson(ex, 400, "{\"error\":\"Missing fields\"}"); return;
+            }
+            // Check if email already exists
+            String checkSql = "SELECT customer_id FROM customers WHERE email = ?";
+            try (Connection c = DatabaseManager.getConnection();
+                 PreparedStatement ps = c.prepareStatement(checkSql)) {
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) { sendJson(ex, 409, "{\"error\":\"Email already registered\"}"); return; }
+            } catch (SQLException e) { sendJson(ex, 500, escape(e.getMessage())); return; }
+            // Insert new customer
+            String insertSql = "INSERT INTO customers (name, email, password_hash) OUTPUT INSERTED.customer_id VALUES (?, ?, ?)";
+            try (Connection c = DatabaseManager.getConnection();
+                 PreparedStatement ps = c.prepareStatement(insertSql)) {
+                ps.setString(1, name);
+                ps.setString(2, email);
+                ps.setString(3, pass); // plain for now; hash in production
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("{").append("\"ok\":true,").append("\"customerId\":").append(id)
+                      .append(",\"name\":").append(q(name)).append(",\"email\":").append(q(email)).append("}");
+                    sendJson(ex, 200, sb.toString());
+                }
+            } catch (SQLException e) { sendJson(ex, 500, escape(e.getMessage())); }
+        }
+    }
+
+    // ── POST /api/customer/login ──────────────────────────────────────────────
+    // Body: { "email":"...", "password":"..." }
+    static class CustomerLoginHandler implements HttpHandler {
+        @Override public void handle(HttpExchange ex) throws IOException {
+            if ("OPTIONS".equals(ex.getRequestMethod())) { sendJson(ex, 200, "{}"); return; }
+            if (!"POST".equals(ex.getRequestMethod())) { sendJson(ex, 405, "{}"); return; }
+            String body  = readBody(ex);
+            String email = jsonVal(body, "email");
+            String pass  = jsonVal(body, "password");
+            String sql = "SELECT customer_id, name, email FROM customers WHERE email = ? AND password_hash = ?";
+            try (Connection c = DatabaseManager.getConnection();
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ps.setString(2, pass);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("{").append("\"ok\":true,")
+                      .append("\"customerId\":").append(rs.getInt("customer_id")).append(",")
+                      .append("\"name\":").append(q(rs.getString("name"))).append(",")
+                      .append("\"email\":").append(q(rs.getString("email"))).append("}");
+                    sendJson(ex, 200, sb.toString());
+                } else {
+                    sendJson(ex, 401, "{\"error\":\"Invalid email or password\"}");
+                }
+            } catch (SQLException e) { sendJson(ex, 500, escape(e.getMessage())); }
+        }
+    }
+
+    // ── GET /api/customer/orders?customerId=N ────────────────────────────────
+    static class CustomerOrdersHandler implements HttpHandler {
+        @Override public void handle(HttpExchange ex) throws IOException {
+            if ("OPTIONS".equals(ex.getRequestMethod())) { sendJson(ex, 200, "{}"); return; }
+            String query = ex.getRequestURI().getQuery();
+            int customerId = -1;
+            if (query != null && query.contains("customerId=")) {
+                try { customerId = Integer.parseInt(query.split("customerId=")[1].split("&")[0]); } catch (Exception ignored) {}
+            }
+            if (customerId < 0) { sendJson(ex, 400, "{\"error\":\"Missing customerId\"}"); return; }
+            StringBuilder sb = new StringBuilder("[");
+            String sql = "SELECT o.order_id, o.order_date, o.subtotal, o.discount_type, o.discount_amount, o.total, o.payment_method " +
+                         "FROM orders o WHERE o.customer_id = ? ORDER BY o.order_date DESC";
+            try (Connection c = DatabaseManager.getConnection();
+                 PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setInt(1, customerId);
+                ResultSet rs = ps.executeQuery();
+                boolean first = true;
+                while (rs.next()) {
+                    if (!first) sb.append(",");
+                    sb.append("{")
+                      .append("\"orderId\":").append(rs.getInt("order_id")).append(",")
+                      .append("\"orderDate\":").append(q(rs.getString("order_date"))).append(",")
+                      .append("\"subtotal\":").append(rs.getDouble("subtotal")).append(",")
+                      .append("\"discountType\":").append(q(rs.getString("discount_type"))).append(",")
+                      .append("\"discountAmount\":").append(rs.getDouble("discount_amount")).append(",")
+                      .append("\"total\":").append(rs.getDouble("total")).append(",")
+                      .append("\"paymentMethod\":").append(q(rs.getString("payment_method")))
+                      .append("}");
+                    first = false;
+                }
+            } catch (SQLException e) { sendJson(ex, 500, escape(e.getMessage())); return; }
+            sb.append("]");
+            sendJson(ex, 200, sb.toString());
         }
     }
 
